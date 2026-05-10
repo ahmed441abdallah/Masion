@@ -118,3 +118,5 @@ The backend provides a robust RESTful API. Here are some of the primary endpoint
 *   **`GET /api/orders`** - Retrieve user orders or all orders (Admin).
 *   **`POST /api/create-checkout-session`** - Initialize a Stripe Checkout session for cart items.
 *   **`POST /webhook-checkout`** - Stripe Webhook endpoint to securely confirm payments and finalize order creation via serverless functions.
+<img width="1920" height="1196" alt="admin" src="https://github.com/user-attachments/assets/e3721c93-98eb-4afe-9ca8-b4d170e0a580" />
+
