@@ -1,31 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-// Layouts
-import MainLayout from "./layouts/MainLayout";
-import AuthLayout from "./layouts/AuthLayout.jsx.jsx";
-
-// Pages
-import Login from "./pages/Auth/Login";
-import LandingPage from "./pages/Landing";
+import { useState, Suspense, useCallback, useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import PageLoader from "./components/PageLoader";
+import { router } from "./router";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile } from "@/store/actions/authActions";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* PUBLIC ROUTES: Get the Navbar and Footer */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<LandingPage />} />
-          {/* Nested routes work perfectly here too */}
-          {/* <Route path="/shop/:productId" element={<ProductDetails />} /> */}
-        </Route>
+  const [loading, setLoading] = useState(true);
+  const handleLoaderComplete = useCallback(() => setLoading(false), []);
+  const dispatch = useDispatch();
+  const { token } = useSelector((s) => s.auth);
 
-        {/* AUTH ROUTES: Clean page, no Navbar or Footer */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
-        </Route>
-      </Routes>
-    </BrowserRouter>
+  // Restore user object on every fresh page load / refresh
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserProfile());
+    }
+  }, [token, dispatch]);
+
+  return (
+    <>
+      {loading && <PageLoader onComplete={handleLoaderComplete} />}
+      <Suspense fallback={<PageLoader />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </>
   );
 }
 

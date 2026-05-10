@@ -1,0 +1,172 @@
+.header {
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  z-index: 1000;
+  color: #a2a1a1;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(43, 43, 43, 0.5);
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  z-index: 1003;
+  position: relative;
+}
+
+.bar p {
+  margin: 0px;
+}
+
+.logoLink {
+  text-decoration: none;
+  color: #a2a1a1;
+  display: flex;
+  align-items: center;
+}
+
+.menuToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+@media only screen and (min-width: 1000px) {
+  .menuToggle {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+  }
+}
+
+.shopContainer {
+  display: none;
+  gap: 30px;
+  position: absolute;
+  right: 0;
+}
+
+.shopLink {
+  color: #a2a1a1;
+  text-decoration: none;
+}
+
+.menuPanel {
+  margin-top: 12px;
+  margin-left: auto;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+.menuPanel a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.el {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.label p:nth-of-type(2) {
+  position: absolute;
+}
+
+.label p:nth-of-type(2) {
+  opacity: 0;
+}
+
+.shop {
+  display: none;
+}
+
+.burger {
+  width: 22.5px;
+  position: relative;
+  pointer-events: none;
+  color: white;
+}
+
+.burger::after,
+.burger::before {
+  content: "";
+  height: 1px;
+  width: 100%;
+  background-color: white;
+  position: relative;
+  display: block;
+  transition: all 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.burger::after {
+  top: -4px;
+}
+.burger::before {
+  top: 4px;
+}
+
+.burgerActive::after {
+  transform: rotate(45deg);
+  top: -1px;
+}
+
+.burgerActive::before {
+  transform: rotate(-45deg);
+  top: 1px;
+}
+
+@media only screen and (min-width: 600px) {
+  .header {
+    padding: 20px;
+  }
+  .bar {
+    font-size: 15px;
+  }
+
+  .shop {
+    display: block;
+    cursor: pointer;
+  }
+
+  .shopContainer {
+    display: flex;
+  }
+}

@@ -1,0 +1,60 @@
+.nav {
+  overflow: hidden;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  z-index: 1002;
+}
+
+.wrapper {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 80px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Mobile-only cart + login row */
+.mobileUtils {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.utilLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.utilLink:hover {
+  color: white;
+}
+
+@media only screen and (min-width: 600px) {
+  /* Hide the mobile utils once the header bar shows them */
+  .mobileUtils {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .wrapper {
+    margin-bottom: 0px;
+    justify-content: space-between;
+  }
+}

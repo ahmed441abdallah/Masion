@@ -5,6 +5,12 @@
 @import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Montserrat', sans-serif;
+  
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+}
 :root {
   font-family:
     "Inter Variable",
@@ -242,4 +248,8 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(200%); }
 }
