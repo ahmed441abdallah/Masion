@@ -198,8 +198,8 @@ const handleClearCart= async ()=>{
           </p>
         </div>
 
-        {/* Error */}
-        {error && (
+        {/* Error — only show when no cart data is available to avoid confusing messages alongside loaded items */}
+        {error && !cartItems?.cartItems?.length && (
           <div className="mb-6 px-4 py-3 bg-rose-50 border border-rose-100 text-rose-600 text-sm" style={sans}>
             {error}
           </div>

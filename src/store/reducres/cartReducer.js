@@ -18,12 +18,14 @@ const cartReducer = (state = intialState, action) => {
             return {
                 ...state,
                 isLoading: true,
+                error: null,
             };
 
         case GET_CART_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
+                error: null,
                 cartItems: action.payload,   // full object { cartItems: [...], totalCartPrice, ... }
             };
 
@@ -32,6 +34,7 @@ const cartReducer = (state = intialState, action) => {
             return {
                 ...state,
                 isLoading: false,
+                error: null,
                 cartItems: action.payload,
             };
 
@@ -48,6 +51,7 @@ const cartReducer = (state = intialState, action) => {
             return {
                 ...state,
                 isLoading: false,
+                error: null,
                 cartItems: {
                     ...state.cartItems,
                     cartItems: filteredItems,
@@ -74,18 +78,21 @@ const cartReducer = (state = intialState, action) => {
             return {
                 ...state,
                 isLoading: false,
+                error: null,
                 cartItems: action.payload,
             };
             case CLEAR_CART_SUCCESS :
                 return {
                     ...state,
                     isLoading: false,
+                    error: null,
                     cartItems: null,
                 };
             case APPLY_CUPON_SUCCESS: 
                 return {
                     ...state,
                     isLoading: false,
+                    error: null,
                     discount: action.payload.discount,
                     cartItems: action.payload.data.cart,
                 };
