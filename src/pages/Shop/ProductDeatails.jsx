@@ -82,8 +82,8 @@ export const ProductDeatails = () => {
   const { user, token } = useSelector((state) => state.auth, shallowEqual);
 
   const requireLogin = () => {
-    if (!token) {
-      
+    const hasToken = token || localStorage.getItem("token");
+    if (!hasToken) {
       toast.error("Please login first.");
       navigate("/login");
       return true;
