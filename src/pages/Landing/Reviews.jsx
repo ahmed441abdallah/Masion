@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/ui/card";
 import MagicBadge from "@/components/ui/MagicBadge";
 import MagicCard from "@/components/ui/MagicCard";
 import { StarIcon } from "lucide-react";
