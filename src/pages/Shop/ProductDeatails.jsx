@@ -265,20 +265,32 @@ const res=await dispatch(AddToCart(product?._id,{
             </div>
           )}
 
-          {/* Hero image */}
-          <div className="flex-1 relative overflow-hidden aspect-[4/5] bg-neutral-100 rounded-md">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={active}
-                src={allImages[active]}
-                alt={title}
-                initial={{ opacity: 0, scale: 1.04 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.38 }}
-                className="w-full h-full object-cover"
-              />
-            </AnimatePresence>
+          {/* Hero image — swipeable */}
+          <div className="flex-1 relative overflow-hidden aspect-[4/5] bg-neutral-100 rounded-md select-none">
+            <motion.div
+              className="w-full h-full"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.15}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -50 && active < allImages.length - 1) setActive(active + 1);
+                if (info.offset.x > 50 && active > 0) setActive(active - 1);
+              }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={active}
+                  src={allImages[active]}
+                  alt={title}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.38 }}
+                  className="w-full h-full object-cover pointer-events-none"
+                  draggable={false}
+                />
+              </AnimatePresence>
+            </motion.div>
 
             {hasDiscount && (
               <div
@@ -289,9 +301,29 @@ const res=await dispatch(AddToCart(product?._id,{
               </div>
             )}
 
-            {/* Mobile dots */}
+            {/* Prev / Next arrow buttons (desktop) */}
             {allImages.length > 1 && (
-              <div className="sm:hidden absolute bottom-3 inset-x-0 flex justify-center gap-1.5">
+              <>
+                <button
+                  onClick={() => setActive((p) => Math.max(0, p - 1))}
+                  disabled={active === 0}
+                  className="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 items-center justify-center rounded-full bg-white/70 backdrop-blur-sm text-neutral-700 hover:bg-white transition-all disabled:opacity-20 disabled:cursor-not-allowed shadow-sm"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={() => setActive((p) => Math.min(allImages.length - 1, p + 1))}
+                  disabled={active === allImages.length - 1}
+                  className="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 items-center justify-center rounded-full bg-white/70 backdrop-blur-sm text-neutral-700 hover:bg-white transition-all disabled:opacity-20 disabled:cursor-not-allowed shadow-sm"
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            {/* Dots (mobile + desktop) */}
+            {allImages.length > 1 && (
+              <div className="absolute bottom-3 inset-x-0 flex justify-center gap-1.5">
                 {allImages.map((_, i) => (
                   <button
                     key={i}
@@ -307,6 +339,7 @@ const res=await dispatch(AddToCart(product?._id,{
             )}
           </div>
         </div>
+
 
         {/* Product Info */}
         <div className="flex flex-col">

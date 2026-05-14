@@ -1,5 +1,5 @@
 import styles from "./style.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { background, opacity } from "./anim";
 import Navbar from "./nav";
@@ -10,11 +10,25 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   const [isActive, setIsActive] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user } = useSelector((s) => s.auth);
-  
+  const { cartItems } = useSelector((s) => s.cart);
+
+  // Sum all item quantities for the badge count
+  const cartCount = cartItems?.cartItems?.reduce(
+    (sum, item) => sum + (item.quantity ?? 1),
+    0
+  ) ?? 0;
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   return (
-    <div className={styles.header}>
+    <div className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}>
       <div className={styles.bar}>
         {/* Left — Logo */}
         <Logo color="white" size="sm" />
@@ -29,7 +43,29 @@ export default function Header() {
             shop
           </Link>
           <Link to="/cart" className={styles.el}>
-            <ShoppingCartIcon size={18} />
+            {/* Cart icon with animated badge */}
+            <div className="relative">
+              <ShoppingCartIcon size={18} />
+              <AnimatePresence mode="popLayout">
+                {cartCount > 0 && (
+                  <motion.span
+                    key={cartCount}
+                    initial={{ scale: 0, opacity: 0, y: -4 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 20,
+                    }}
+                    className="absolute -top-2 -right-2.5 min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center text-[9px] font-semibold leading-none"
+                    style={{ background: "#c9a96e", color: "#fff" }}
+                  >
+                    {cartCount > 99 ? "99+" : cartCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
             <p>Cart</p>
           </Link>
 
